@@ -1,0 +1,19 @@
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+sqlalchemy>=2.0.30
+pydantic>=2.7.1
+pydantic-settings>=2.2.1
+python-dotenv>=1.0.1
+httpx>=0.27.0
+python-multipart>=0.0.9
+aiosqlite>=0.20.0
+# AI packages — comment out if install fails, app degrades gracefully
+langchain>=0.2.16
+langchain-community>=0.2.16
+langchain-core>=0.2.38
+langchain-google-genai>=1.0.10
+langchain-openai>=0.1.22
+openai>=1.40.0
+google-generativeai>=0.8.0
+pinecone-client>=3.2.2
+numpy>=2.0.0
