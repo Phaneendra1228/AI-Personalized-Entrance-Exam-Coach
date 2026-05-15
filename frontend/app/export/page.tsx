@@ -26,6 +26,11 @@ export default function ExportPage() {
     const { t } = useTranslation();
     const [selected, setSelected] = useState<Set<string>>(new Set(DATA_KEYS.map(d => d.key)));
     const [exported, setExported] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const toggleAll = () => {
         if (selected.size === DATA_KEYS.length) setSelected(new Set());
@@ -80,6 +85,7 @@ export default function ExportPage() {
     };
 
     const getSize = (key: string) => {
+        if (!mounted) return '—';
         const sessionKeys = new Set(['lf-auth', 'lf-profile']);
         const val = sessionKeys.has(key) ? sessionStorage.getItem(key) : localStorage.getItem(key);
         if (!val) return '—';
@@ -109,7 +115,7 @@ export default function ExportPage() {
             <div className="space-y-1.5">
                 {DATA_KEYS.map(d => {
                     const sessionKeys = new Set(['lf-auth', 'lf-profile']);
-                    const hasData = !!(sessionKeys.has(d.key) ? sessionStorage.getItem(d.key) : localStorage.getItem(d.key));
+                    const hasData = mounted ? !!(sessionKeys.has(d.key) ? sessionStorage.getItem(d.key) : localStorage.getItem(d.key)) : false;
                     return (
                         <button key={d.key} onClick={() => toggle(d.key)}
                             className="w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all hover:bg-white/5"
