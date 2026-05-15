@@ -19,7 +19,4 @@ services:
     startCommand: npm start
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        fromService:
-          type: web
-          name: ai-coach-backend
-          property: host
+        value: https://ai-coach-backend.onrender.com
