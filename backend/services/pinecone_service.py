@@ -129,16 +129,37 @@ def retrieve_resources_sync(topic: str, top_k: int = 5) -> List[ResourceItem]:
 
 
 def _get_embedding_model():
+    provider = (settings.LLM_PROVIDER or "gemini").strip().lower()
+    openai_ok = settings.valid_openai_key()
+    gemini_ok = settings.valid_gemini_key()
     try:
-        if settings.LLM_PROVIDER == "openai" and settings.OPENAI_API_KEY:
+        if provider == "openai" and openai_ok:
             from langchain_openai import OpenAIEmbeddings
             return OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY)
-        elif settings.GEMINI_API_KEY and settings.GEMINI_API_KEY not in ("", "your_gemini_api_key_here"):
+        if provider == "gemini" and gemini_ok:
             from langchain_google_genai import GoogleGenerativeAIEmbeddings
             return GoogleGenerativeAIEmbeddings(
                 model="models/embedding-001",
-                google_api_key=settings.GEMINI_API_KEY
+                google_api_key=settings.GEMINI_API_KEY,
             )
+        if provider == "openai" and not openai_ok and gemini_ok:
+            from langchain_google_genai import GoogleGenerativeAIEmbeddings
+            return GoogleGenerativeAIEmbeddings(
+                model="models/embedding-001",
+                google_api_key=settings.GEMINI_API_KEY,
+            )
+        if provider == "gemini" and not gemini_ok and openai_ok:
+            from langchain_openai import OpenAIEmbeddings
+            return OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY)
+        if gemini_ok:
+            from langchain_google_genai import GoogleGenerativeAIEmbeddings
+            return GoogleGenerativeAIEmbeddings(
+                model="models/embedding-001",
+                google_api_key=settings.GEMINI_API_KEY,
+            )
+        if openai_ok:
+            from langchain_openai import OpenAIEmbeddings
+            return OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY)
     except ImportError:
         pass
     return None

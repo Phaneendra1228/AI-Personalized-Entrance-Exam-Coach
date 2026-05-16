@@ -29,20 +29,47 @@ When responding:
 """
 
 
+def _make_openai():
+    from langchain_openai import ChatOpenAI
+
+    return ChatOpenAI(
+        model="gpt-4o-mini",
+        openai_api_key=settings.OPENAI_API_KEY,
+        temperature=0.7,
+    )
+
+
+def _make_gemini():
+    from langchain_google_genai import ChatGoogleGenerativeAI
+
+    return ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",
+        google_api_key=settings.GEMINI_API_KEY,
+        temperature=0.7,
+        convert_system_message_to_human=True,
+    )
+
+
 def _get_llm():
     """Initialize LLM — returns None if not configured (graceful degradation)."""
+    provider = (settings.LLM_PROVIDER or "gemini").strip().lower()
+    openai_ok = settings.valid_openai_key()
+    gemini_ok = settings.valid_gemini_key()
+
     try:
-        if settings.LLM_PROVIDER == "openai" and settings.OPENAI_API_KEY:
-            from langchain_openai import ChatOpenAI
-            return ChatOpenAI(model="gpt-4o-mini", openai_api_key=settings.OPENAI_API_KEY, temperature=0.7)
-        elif settings.GEMINI_API_KEY and settings.GEMINI_API_KEY not in ("", "your_gemini_api_key_here"):
-            from langchain_google_genai import ChatGoogleGenerativeAI
-            return ChatGoogleGenerativeAI(
-                model="gemini-1.5-flash",
-                google_api_key=settings.GEMINI_API_KEY,
-                temperature=0.7,
-                convert_system_message_to_human=True,
-            )
+        if provider == "openai" and openai_ok:
+            return _make_openai()
+        if provider == "gemini" and gemini_ok:
+            return _make_gemini()
+        # Preferred provider missing or invalid — use whichever key is configured
+        if provider == "openai" and not openai_ok and gemini_ok:
+            return _make_gemini()
+        if provider == "gemini" and not gemini_ok and openai_ok:
+            return _make_openai()
+        if gemini_ok:
+            return _make_gemini()
+        if openai_ok:
+            return _make_openai()
     except ImportError:
         pass
     return None
