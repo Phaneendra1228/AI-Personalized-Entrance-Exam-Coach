@@ -272,19 +272,16 @@ export default function LoginPage() {
             `}</style>
 
             {/* ─── Video Background ─── */}
-            <div className="fixed inset-0 z-0 overflow-hidden bg-black">
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover opacity-70"
-                >
-                    {/* Referencing a local video file in the /public folder to avoid CDN blocks */}
-                    <source src="/bg-video.mp4" type="video/mp4" />
-                </video>
+            <div className="fixed inset-0 z-0 overflow-hidden bg-black pointer-events-none">
+                {/* Using an oversized iframe to push YouTube UI elements off-screen */}
+                <iframe
+                    className="absolute top-1/2 left-1/2 w-[150vw] h-[150vh] min-w-[1920px] min-h-[1080px] -translate-x-1/2 -translate-y-1/2 opacity-60"
+                    src="https://www.youtube.com/embed/t2Q634W0Z8w?autoplay=1&mute=1&loop=1&controls=0&disablekb=1&fs=0&playsinline=1&playlist=t2Q634W0Z8w"
+                    allow="autoplay; encrypted-media"
+                    frameBorder="0"
+                ></iframe>
                 {/* Dark overlay to ensure the login card text is always readable */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a]/80 via-[#0d1033]/60 to-[#0f0a2e]/80 backdrop-blur-[1px]"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a]/80 via-[#0d1033]/70 to-[#0f0a2e]/80 backdrop-blur-[2px]"></div>
             </div>
 
             {/* ─── Language Picker Modal ─── */}
