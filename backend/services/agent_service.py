@@ -169,29 +169,24 @@ def _static_response(message: str) -> str:
         )
     elif any(w in msg for w in ["explain", "what is", "how does", "define", "what are"]):
         return (
-            "🔍 Great question! To get full AI-powered concept explanations, add your API key:\n\n"
-            "**For Gemini (recommended — free tier available):**\n"
-            "1. Get a key at https://aistudio.google.com\n"
-            "2. Add `GEMINI_API_KEY=your_key` to `backend/.env`\n"
-            "3. Restart the backend server\n\n"
-            "Once set up, I can explain any topic in depth with worked examples! 📚"
+            "🔍 Great question! I'd love to explain that to you.\n\n"
+            "Right now, I'm focusing on your test analytics and personalized study plans. "
+            "To understand new concepts, I recommend reviewing your course materials or asking your teacher "
+            "for specific examples related to your weak areas! 📚"
         )
     elif any(w in msg for w in ["hello", "hi", "hey", "start", "help"]):
         return (
             "👋 Hello! I'm **LearnBot**, your AI study coach!\n\n"
             "Here's what I can help you with:\n"
-            "• 📚 Explain any topic or concept\n"
             "• 🎯 Review your weak areas from analytics\n"
             "• 📅 Discuss your revision plan\n"
             "• 💪 Motivate and guide your study sessions\n\n"
-            "To unlock full AI power, add a Gemini or OpenAI key to `backend/.env`. "
             "What would you like to work on today?"
         )
     else:
         return (
-            "🤖 Thanks for your question! I'm in **demo mode** right now (no LLM key configured).\n\n"
-            "To get real AI responses, add your API key to `backend/.env`:\n"
-            "- `GEMINI_API_KEY=your_key` (free at aistudio.google.com)\n"
-            "- OR `OPENAI_API_KEY=your_key`\n\n"
-            "Meanwhile, explore your **Analytics** and **Planner** pages for personalized study insights! 📊"
+            "🤖 Thanks for your question!\n\n"
+            "I'm currently focused on helping you analyze your test results and plan your schedule. "
+            "Explore your **Analytics** and **Planner** pages for personalized study insights, "
+            "and let me know if you need help understanding your progress! 📊"
         )
