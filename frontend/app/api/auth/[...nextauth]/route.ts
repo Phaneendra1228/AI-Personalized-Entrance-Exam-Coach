@@ -13,6 +13,7 @@ const handler = NextAuth({
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET || "supersecret1234567890_fallback_secret",
   session: {
     strategy: "jwt",
   },
