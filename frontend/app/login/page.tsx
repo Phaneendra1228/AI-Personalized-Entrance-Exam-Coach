@@ -280,7 +280,8 @@ export default function LoginPage() {
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover opacity-70"
                 >
-                    <source src="https://cdn.pixabay.com/video/2023/10/22/186121-877013183_large.mp4" type="video/mp4" />
+                    {/* Referencing a local video file in the /public folder to avoid CDN blocks */}
+                    <source src="/bg-video.mp4" type="video/mp4" />
                 </video>
                 {/* Dark overlay to ensure the login card text is always readable */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a]/80 via-[#0d1033]/60 to-[#0f0a2e]/80 backdrop-blur-[1px]"></div>
