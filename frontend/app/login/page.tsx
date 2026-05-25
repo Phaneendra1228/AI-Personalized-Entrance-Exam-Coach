@@ -282,8 +282,8 @@ export default function LoginPage() {
                 >
                     <source src="/bg-video.mp4" type="video/mp4" />
                 </video>
-                {/* Dark overlay to ensure the login card text is always readable */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a]/80 via-[#0d1033]/70 to-[#0f0a2e]/80 backdrop-blur-[2px]"></div>
+                {/* Simple dark overlay without blur or blue tint, ensuring the video remains razor sharp and high quality */}
+                <div className="absolute inset-0 bg-black/40"></div>
             </div>
 
             {/* ─── Language Picker Modal ─── */}
