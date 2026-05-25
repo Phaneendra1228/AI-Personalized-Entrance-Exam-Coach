@@ -271,37 +271,19 @@ export default function LoginPage() {
                 }
             `}</style>
 
-            {/* ─── Animated Background ─── */}
-            <div className="login-bg">
-                <div className="login-orb" />
-                <div className="login-orb" />
-                <div className="login-orb" />
-                <div className="login-orb" />
-                <div className="login-grid" />
-
-                {/* Shooting stars */}
-                <div className="login-star" />
-                <div className="login-star" />
-                <div className="login-star" />
-
-                {/* Floating particles — deterministic positions to avoid SSR hydration mismatch */}
-                {[
-                    { l: 5, d: 10, dl: 0, s: 2 }, { l: 12, d: 14, dl: 3, s: 3 }, { l: 20, d: 9, dl: 6, s: 4 },
-                    { l: 28, d: 18, dl: 1, s: 2 }, { l: 35, d: 11, dl: 8, s: 3 }, { l: 42, d: 16, dl: 2, s: 5 },
-                    { l: 50, d: 8, dl: 5, s: 2 }, { l: 55, d: 13, dl: 9, s: 3 }, { l: 62, d: 19, dl: 4, s: 4 },
-                    { l: 68, d: 10, dl: 7, s: 2 }, { l: 75, d: 15, dl: 1, s: 3 }, { l: 80, d: 12, dl: 6, s: 5 },
-                    { l: 85, d: 17, dl: 3, s: 2 }, { l: 90, d: 9, dl: 8, s: 3 }, { l: 95, d: 14, dl: 0, s: 4 },
-                    { l: 8, d: 11, dl: 5, s: 3 }, { l: 30, d: 16, dl: 2, s: 2 }, { l: 48, d: 10, dl: 7, s: 4 },
-                    { l: 65, d: 18, dl: 4, s: 3 }, { l: 88, d: 13, dl: 9, s: 2 },
-                ].map((p, i) => (
-                    <div key={i} className="login-particle" style={{
-                        left: `${p.l}%`,
-                        animationDuration: `${p.d}s`,
-                        animationDelay: `${p.dl}s`,
-                        width: `${p.s}px`,
-                        height: `${p.s}px`,
-                    }} />
-                ))}
+            {/* ─── Video Background ─── */}
+            <div className="fixed inset-0 z-0 overflow-hidden bg-black">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover opacity-70"
+                >
+                    <source src="https://cdn.pixabay.com/video/2023/10/22/186121-877013183_large.mp4" type="video/mp4" />
+                </video>
+                {/* Dark overlay to ensure the login card text is always readable */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a]/80 via-[#0d1033]/60 to-[#0f0a2e]/80 backdrop-blur-[1px]"></div>
             </div>
 
             {/* ─── Language Picker Modal ─── */}
