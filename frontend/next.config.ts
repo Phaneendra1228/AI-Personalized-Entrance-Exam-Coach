@@ -5,7 +5,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
+        // Proxy everything under /api/ to the backend EXCEPT /api/auth/
+        source: '/api/:path((?!auth).*)',
         destination: 'http://localhost:8000/:path*',
       },
     ];
