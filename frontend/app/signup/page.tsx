@@ -22,9 +22,30 @@ export default function SignupPage() {
         { id: 'neet', label: 'NEET' },
     ];
 
+    const validateEmail = (email: string) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!re.test(email)) return false;
+        
+        const [username, domain] = email.toLowerCase().split('@');
+        
+        // Reject numbers-only usernames (e.g., 123@gmail.com)
+        if (/^\d+$/.test(username)) return false;
+        
+        // Reject dummy usernames
+        const fakeUsernames = ['test', 'example', 'fake', 'dummy', 'abc', 'admin'];
+        if (fakeUsernames.includes(username)) return false;
+        
+        // Reject dummy domains
+        const fakeDomains = ['example.com', 'test.com', 'fake.com'];
+        if (fakeDomains.includes(domain)) return false;
+        
+        return true;
+    };
+
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!name || !email || !password || !confirm) { setError('Please fill in all fields'); return; }
+        if (!validateEmail(email)) { setError('Please enter a valid, real email address'); return; }
         if (password !== confirm) { setError('Passwords do not match'); return; }
         if (password.length < 6) { setError('Password must be at least 6 characters'); return; }
 
