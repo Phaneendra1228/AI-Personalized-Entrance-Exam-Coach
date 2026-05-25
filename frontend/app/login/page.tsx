@@ -280,7 +280,7 @@ export default function LoginPage() {
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover opacity-70"
                 >
-                    <source src="https://nextgened.netlify.app/assets/images/course-video.mp4" type="video/mp4" />
+                    <source src="/bg-video.mp4" type="video/mp4" />
                 </video>
                 {/* Simple dark overlay without blur or blue tint, ensuring the video remains razor sharp and high quality */}
                 <div className="absolute inset-0 bg-black/40"></div>
