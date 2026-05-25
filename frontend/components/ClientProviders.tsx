@@ -23,11 +23,13 @@ function SessionSync({ children }: { children: React.ReactNode }) {
             const currentAuth = sessionStorage.getItem('lf-auth');
             if (!currentAuth) {
                 const socialName = session.user.name || session.user.email?.split('@')[0] || 'User';
+                const isGithub = session.user.image?.includes('githubusercontent');
+                
                 sessionStorage.setItem('lf-auth', JSON.stringify({
                     email: session.user.email,
                     name: socialName,
                     loggedIn: true,
-                    provider: 'google',
+                    provider: isGithub ? 'github' : 'google',
                     loginDate: new Date().toISOString(),
                 }));
                 sessionStorage.setItem('lf-profile', JSON.stringify({
